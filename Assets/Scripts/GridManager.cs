@@ -10,7 +10,8 @@ public class GridManager : MonoBehaviour
     public int maxColumn;
     private Grid gridData;
     public Dictionary<Vector2Int, TileData> mapTiles = new Dictionary<Vector2Int, TileData>();
-    private List<Sprite> candy;
+    public List<Sprite> candy = new List<Sprite>();
+    private int index = 0;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
         GenerateGrid();
+
     }
 
     private void GenerateGrid()
@@ -35,14 +37,16 @@ public class GridManager : MonoBehaviour
             {
                 
                 int witchSprite = Random.Range(0, tilePrefab.possibleCandyDatas.Count);
-                tilePrefab.spriteRenderer.sprite = tilePrefab.possibleCandyDatas[witchSprite];
-                //tilePrefab.possibleCandyDatas.RemoveAt(witchSprite);
-                //candy.Add(tilePrefab.possibleCandyDatas[witchSprite]);
+
+                candy.Insert(index, tilePrefab.possibleCandyDatas[witchSprite]);
+
+                tilePrefab.spriteRenderer.sprite = candy[index];
+
+                tilePrefab.possibleCandyDatas.RemoveAt(witchSprite);
+
+                index += 1;
+
                 var tile = Instantiate(tilePrefab, new Vector3(x, y,0), Quaternion.identity, transform);
-                
-
-                
-
 
                 tile.transform.localScale = gridData.cellSize;
                 x -= 1 * (gridData.cellSize.x + gridData.cellGap.x);
@@ -50,6 +54,15 @@ public class GridManager : MonoBehaviour
                 tile.name = "Tile - (" + row.ToString() + " - " + column.ToString() + ")";
                 mapTiles[new Vector2Int(row, column)] = tile.data;
 
+
+                if (tilePrefab.possibleCandyDatas.Count <= 0)
+                {
+                    for (int i = 0; i<candy.Count; i++)
+                    {
+                        tilePrefab.possibleCandyDatas.Add(candy[i]);
+                        candy.RemoveAt(i);
+                    }
+                }
 
             }
             x = startPosition.x;
