@@ -1,19 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+
 
 public class Tile : MonoBehaviour
 {
     public TileData data;
+    public SpriteRenderer spriteRenderer;
+    public List<Sprite> possibleCandyDatas;
+   
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     public void Initialize(GridManager gridM, int rowInit, int columnInit)
     {
         data = new TileData(gridM, rowInit, columnInit);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log(gameObject.name);
-    }
+
+    
+
+
+   
 }
