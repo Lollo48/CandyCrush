@@ -5,10 +5,10 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     public Tile tilePrefab;
-    public uint maxRow;
-    public uint maxColumn;
+    public int maxRow;
+    public int maxColumn;
     private Grid gridData;
-    public Dictionary<uint[], TileData> mapTiles = new Dictionary<uint[], TileData>();
+    public Dictionary<Vector2Int, TileData> mapTiles = new Dictionary<Vector2Int, TileData>();
 
     private void Awake()
     {
@@ -26,17 +26,16 @@ public class GridManager : MonoBehaviour
         float x = startPosition.x;
         float y = startPosition.z;
 
-        for (uint row = maxRow; row > 0; row--)
+        for (int row = maxRow; row > 0; row--)
         {
-            for (uint column = 0; column < maxColumn; column++)
+            for (int column = 0; column < maxColumn; column++)
             {
                 var tile = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity, transform);
                 tile.transform.localScale = gridData.cellSize;
                 x -= 1 * (gridData.cellSize.x + gridData.cellGap.x);
                 tile.Initialize(this, row, column);
                 tile.name = "Tile - (" + row.ToString() + " - " + column.ToString() + ")";
-                uint[] newKeyMap = { row, column };
-                mapTiles[newKeyMap] = tile.data;
+                mapTiles[new Vector2Int(row, column)] = tile.data;
             }
             x = startPosition.x;
             y -= 1 * (gridData.cellSize.z + gridData.cellGap.z);
