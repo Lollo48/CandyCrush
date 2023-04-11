@@ -10,8 +10,7 @@ public class GridManager : MonoBehaviour
     public int maxColumn;
     private Grid gridData;
     public Dictionary<Vector2Int, TileData> mapTiles = new Dictionary<Vector2Int, TileData>();
-    public List<Sprite> candy = new List<Sprite>();
-    private int index = 0;
+    private GameObject[,] Grid;
 
     private void Awake()
     {
@@ -35,18 +34,28 @@ public class GridManager : MonoBehaviour
         {
             for (int column = 0; column < maxColumn; column++)
             {
+                List<Sprite> possibleSprites = new List<Sprite>(tilePrefab.possibleCandyDatas); // 1
+
+                GameObject newTile = Instantiate(tilePrefab);
+
+                //Choose what sprite to use for this cell
+                Sprite left1 = GetSpriteAt(column - 1, row); //2
+                Sprite left2 = GetSpriteAt(column - 2, row);
+                if (left2 != null && left1 == left2) // 3
+                {
+                    possibleSprites.Remove(left1); // 4
+                }
+
+                Sprite down1 = GetSpriteAt(column, row - 1); // 5
+                Sprite down2 = GetSpriteAt(column, row - 2);
+                if (down2 != null && down1 == down2)
+                {
+                    possibleSprites.Remove(down1);
+                }
+
                 
-                int witchSprite = Random.Range(0, tilePrefab.possibleCandyDatas.Count);
 
-                candy.Insert(index, tilePrefab.possibleCandyDatas[witchSprite]);
-
-                tilePrefab.spriteRenderer.sprite = candy[index];
-
-                tilePrefab.possibleCandyDatas.RemoveAt(witchSprite);
-
-                index += 1;
-
-                var tile = Instantiate(tilePrefab, new Vector3(x, y,0), Quaternion.identity, transform);
+                tilePrefab.spriteRenderer.sprite = tilePrefab.possibleCandyDatas[Random.Range(0, tilePrefab.possibleCandyDatas.Count)];
 
                 tile.transform.localScale = gridData.cellSize;
                 x -= 1 * (gridData.cellSize.x + gridData.cellGap.x);
@@ -54,15 +63,10 @@ public class GridManager : MonoBehaviour
                 tile.name = "Tile - (" + row.ToString() + " - " + column.ToString() + ")";
                 mapTiles[new Vector2Int(row, column)] = tile.data;
 
+               
+               
 
-                if (tilePrefab.possibleCandyDatas.Count <= 0)
-                {
-                    for (int i = 0; i<candy.Count; i++)
-                    {
-                        tilePrefab.possibleCandyDatas.Add(candy[i]);
-                        candy.RemoveAt(i);
-                    }
-                }
+                Grid[column, row] = tile;
 
             }
             x = startPosition.x;
@@ -73,34 +77,15 @@ public class GridManager : MonoBehaviour
 
 
 
-    
+    private Sprite GetSpriteAt(int column, int row)
+    {
+        if (column < 0 || column >= maxColumn || row < 0 || row >= maxRow)
+            return null;
+        GameObject tile = Grid[column, row];
+        SpriteRenderer renderer = tile.GetComponent<SpriteRenderer>();
+        return renderer.sprite;
+    }
 
 
-    //public void SpawnTerrain(bool isStart, Vector3 playerPos)
-    //{
-    //    if ((currentPosition.z - playerPos.z < m_minDistanceFromPlayer) || (isStart))//distancefrom player 
-    //    {
-    //        int whichTerrain = Random.Range(0, terrainDatas.Count); //take randomly from terrainDatas 
-    //        int terrainInSuccession = Random.Range(1, terrainDatas[whichTerrain].maxTerrainInSuccession); //take randomly from terrainDatas the succession of it
-    //        for (int i = 0; i < terrainInSuccession; i++)
-    //        {
-    //            //instantiate a new terrain pick from terrainDatas all randomly and put in a terrainHolder
-    //            //This quaternion identity corresponds to "no rotation" - the object is perfectly aligned with the world or parent axes.
-    //            GameObject terrain = Instantiate(terrainDatas[whichTerrain].terrain[Random.Range(0, terrainDatas[whichTerrain].terrain.Count - 1)], currentPosition, Quaternion.identity, terrainHolder);
-    //            currentTerrains.Add(terrain); //add terrain 
-    //            if (!isStart)
-    //            {
-    //                if (currentTerrains.Count > m_maxTerrainCount) //control from currentTerrainsCount and maxTerrainCount
-    //                {
-    //                    Destroy(currentTerrains[0]);//destroy currentTerrains 
-    //                    currentTerrains.RemoveAt(0);
-    //                }
-    //            }
-    //            currentPosition.z = currentPosition.z + 1; //incrementa z position for the terrains
-    //        }
-    //    }
-
-
-    //}
 
 }
