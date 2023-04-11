@@ -10,6 +10,8 @@ public class GridManager : MonoBehaviour
     public int maxColumn;
     private Grid gridData;
     public Dictionary<Vector2Int, TileData> mapTiles = new Dictionary<Vector2Int, TileData>();
+
+
     public List<Sprite> candy = new List<Sprite>();
     private int index = 0;
 
@@ -35,14 +37,24 @@ public class GridManager : MonoBehaviour
         {
             for (int column = 0; column < maxColumn; column++)
             {
+                if (tilePrefab.possibleCandyDatas.Count < 1)
+                {
+                    foreach (var i in candy)
+                    {
+                        tilePrefab.possibleCandyDatas.Add(i);
+                        
+                    }
+                    candy.Reverse();
+                }
                 
-                int witchSprite = Random.Range(0, tilePrefab.possibleCandyDatas.Count);
+                int whichSprite = Random.Range(0, tilePrefab.possibleCandyDatas.Count);
 
-                candy.Insert(index, tilePrefab.possibleCandyDatas[witchSprite]);
-
+                candy.Insert(index, tilePrefab.possibleCandyDatas[whichSprite]);
+               
+                
                 tilePrefab.spriteRenderer.sprite = candy[index];
 
-                tilePrefab.possibleCandyDatas.RemoveAt(witchSprite);
+                tilePrefab.possibleCandyDatas.RemoveAt(whichSprite);
 
                 index += 1;
 
@@ -54,21 +66,18 @@ public class GridManager : MonoBehaviour
                 tile.name = "Tile - (" + row.ToString() + " - " + column.ToString() + ")";
                 mapTiles[new Vector2Int(row, column)] = tile.data;
 
-
-                if (tilePrefab.possibleCandyDatas.Count <= 0)
-                {
-                    for (int i = 0; i<candy.Count; i++)
-                    {
-                        tilePrefab.possibleCandyDatas.Add(candy[i]);
-                        candy.RemoveAt(i);
-                    }
-                }
+               
 
             }
+
             x = startPosition.x;
             y -= 1 * (gridData.cellSize.z + gridData.cellGap.z);
-
+            index = 0;
         }
+
+        
+
+
     }
 
 

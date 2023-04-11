@@ -238,8 +238,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: -2139814788283604026, guid: 4e0eefc12a5f58347bbcc4fdfef647c7, type: 3}
-  maxRow: 4
-  maxColumn: 4
+  maxRow: 6
+  maxColumn: 6
+  candy: []
 --- !u!114 &1448804044
 MonoBehaviour:
   m_ObjectHideFlags: 0
