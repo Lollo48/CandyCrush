@@ -12,6 +12,7 @@ public class GridManager : MonoBehaviour
     public Dictionary<Vector2Int, TileData> mapTiles = new Dictionary<Vector2Int, TileData>();
 
 
+
     private void Awake()
     {
         gridData = GetComponent<Grid>();
@@ -20,6 +21,7 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
+
         GenerateGrid();
 
     }
@@ -34,10 +36,29 @@ public class GridManager : MonoBehaviour
         {
             for (int column = 0; column < maxColumn; column++)
             {
-
-
-
                 var tile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity, transform);
+
+                List<Sprite> possibleSprites = new List<Sprite>(tilePrefab.possibleCandySprite);
+
+                Sprite left1 = GetSpriteAt(column, row - 1);
+                Sprite left2 = GetSpriteAt(column, row - 2);
+                if (left2 != null && left1 == left2)
+                {
+                    possibleSprites.Remove(left2);
+                    
+                }
+
+
+                Sprite down1 = GetSpriteAt(column -1, row);
+                Sprite down2 = GetSpriteAt(column - 2, row);
+                if (down2 != null && down1 == down2)
+                {
+                    possibleSprites.Remove(down2);
+                }
+
+
+                tilePrefab.spriteRenderer.sprite = possibleSprites[Random.Range(0, possibleSprites.Count)];
+
 
                 tile.transform.localScale = gridData.cellSize;
                 x -= 1 * (gridData.cellSize.x + gridData.cellGap.x);
@@ -45,13 +66,23 @@ public class GridManager : MonoBehaviour
                 tile.name = "Tile - (" + row.ToString() + " - " + column.ToString() + ")";
                 mapTiles[new Vector2Int(row, column)] = tile.data;
 
-
             }
             x = startPosition.x;
             y -= 1 * (gridData.cellSize.z + gridData.cellGap.z);
 
         }
     }
+
+
+
+    Sprite GetSpriteAt(int column, int row)
+    {
+        if (column < 0 || column >= maxColumn || row < 0 || row >= maxRow) return null;
+        else return tilePrefab.spriteRenderer.sprite;
+    }
+
+
+
 
 
 
