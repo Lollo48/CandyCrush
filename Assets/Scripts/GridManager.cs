@@ -40,8 +40,8 @@ public class GridManager : MonoBehaviour
 
                 List<Sprite> possibleSprites = new List<Sprite>(tilePrefab.possibleCandySprite);
 
-                Sprite left1 = GetSpriteAt(column, row - 1);
-                Sprite left2 = GetSpriteAt(column, row - 2);
+                Sprite left1 = GetSprite(column, row - 1);
+                Sprite left2 = GetSprite(column, row - 2);
                 if (left2 != null && left1 == left2)
                 {
                     possibleSprites.Remove(left2);
@@ -49,8 +49,8 @@ public class GridManager : MonoBehaviour
                 }
 
 
-                Sprite down1 = GetSpriteAt(column -1, row);
-                Sprite down2 = GetSpriteAt(column - 2, row);
+                Sprite down1 = GetSprite(column -1, row);
+                Sprite down2 = GetSprite(column - 2, row);
                 if (down2 != null && down1 == down2)
                 {
                     possibleSprites.Remove(down2);
@@ -75,7 +75,7 @@ public class GridManager : MonoBehaviour
 
 
 
-    Sprite GetSpriteAt(int column, int row)
+    Sprite GetSprite(int column, int row)
     {
         if (column < 0 || column >= maxColumn || row < 0 || row >= maxRow) return null;
         else return tilePrefab.spriteRenderer.sprite;
