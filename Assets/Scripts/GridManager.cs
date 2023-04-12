@@ -10,7 +10,12 @@ public class GridManager : MonoBehaviour
     public int maxColumn;
     private Grid gridData;
     public Dictionary<Vector2Int, TileData> mapTiles = new Dictionary<Vector2Int, TileData>();
+<<<<<<< Updated upstream
     private GameObject[,] Grid;
+=======
+
+
+>>>>>>> Stashed changes
 
     private void Awake()
     {
@@ -34,6 +39,7 @@ public class GridManager : MonoBehaviour
         {
             for (int column = 0; column < maxColumn; column++)
             {
+<<<<<<< Updated upstream
                 List<Sprite> possibleSprites = new List<Sprite>(tilePrefab.possibleCandyDatas); // 1
 
                 GameObject newTile = Instantiate(tilePrefab);
@@ -56,6 +62,11 @@ public class GridManager : MonoBehaviour
                 
 
                 tilePrefab.spriteRenderer.sprite = tilePrefab.possibleCandyDatas[Random.Range(0, tilePrefab.possibleCandyDatas.Count)];
+=======
+               
+
+                var tile = Instantiate(tilePrefab, new Vector3(x, y,0), Quaternion.identity, transform);
+>>>>>>> Stashed changes
 
                 tile.transform.localScale = gridData.cellSize;
                 x -= 1 * (gridData.cellSize.x + gridData.cellGap.x);
@@ -71,12 +82,17 @@ public class GridManager : MonoBehaviour
             }
             x = startPosition.x;
             y -= 1 * (gridData.cellSize.z + gridData.cellGap.z);
+<<<<<<< Updated upstream
 
+=======
+         
+>>>>>>> Stashed changes
         }
     }
 
 
 
+<<<<<<< Updated upstream
     private Sprite GetSpriteAt(int column, int row)
     {
         if (column < 0 || column >= maxColumn || row < 0 || row >= maxRow)
@@ -88,4 +104,6 @@ public class GridManager : MonoBehaviour
 
 
 
+=======
+>>>>>>> Stashed changes
 }
