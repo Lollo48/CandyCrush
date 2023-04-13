@@ -8,11 +8,16 @@ public class GridManager : MonoBehaviour
     public GameObject tilePrefab;
     public int maxColumn;
     public int maxRow;
-    public float Distance = 1.0f;
     private GameObject[,] Grid;
     public List<Sprite> possibleCandySprite = new List<Sprite>();
-    private Vector3 positionOffset = new Vector3(-2, -3, 0);
+    private Grid gridData;
+    public Vector3 offset;
+    
 
+    private void Awake()
+    {
+        gridData = GetComponent<Grid>();
+    }
     void Start()
     {
 
@@ -22,11 +27,16 @@ public class GridManager : MonoBehaviour
 
     private void GridGenerator()
     {
+        Vector3 startPosition = new Vector3(maxColumn * (gridData.cellSize.x + gridData.cellGap.x) / 2, maxRow * (gridData.cellSize.y + gridData.cellGap.y) / 2, 0);
+        
+        float x = startPosition.x;
+        float y = startPosition.y;
+
         for (int row = 0; row < maxRow; row++)
         {
             for (int column = 0; column < maxColumn; column++)
             {
-                GameObject newTile = Instantiate(tilePrefab);
+                GameObject newTile = Instantiate(tilePrefab, new Vector3( x, y , 0) + offset, Quaternion.identity, transform);
 
                 List<Sprite> possibleSprites = new List<Sprite>(possibleCandySprite);
 
@@ -48,14 +58,16 @@ public class GridManager : MonoBehaviour
                 SpriteRenderer renderer = newTile.GetComponent<SpriteRenderer>();
                 renderer.sprite = possibleSprites[Random.Range(0, possibleSprites.Count)];
 
-                Tile tile = newTile.AddComponent<Tile>();
-                tile.Position = new Vector2Int(column, row);
-
-                newTile.transform.parent = transform;
-                newTile.transform.position = new Vector3(column * Distance, row * Distance, 0) + positionOffset;
-
+                //Tile tile = newTile.AddComponent<Tile>();
+                //tile.Position = new Vector2Int(column, row);
+                newTile.name = "Tile - (" + row.ToString() + " - " + column.ToString() + ")";
+                newTile.transform.localScale = gridData.cellSize;
+                x += 1 * (gridData.cellSize.x + gridData.cellGap.x);
                 Grid[column, row] = newTile;
+
             }
+            x = startPosition.x;
+            y -= 1 * (gridData.cellSize.z + gridData.cellGap.z);
         }
 
     }
