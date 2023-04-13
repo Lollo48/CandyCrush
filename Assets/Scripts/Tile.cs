@@ -11,7 +11,6 @@ public class Tile : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public List<Sprite> possibleCandySprite = new List<Sprite>();
 
-    public Vector2Int Position;
 
     private void Start()
     {
