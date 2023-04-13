@@ -10,7 +10,7 @@ public class GridManager : MonoBehaviour
     public int maxColumn;
     private Grid gridData;
     public Dictionary<Vector2Int, TileData> mapTiles = new Dictionary<Vector2Int, TileData>();
-
+    
 
 
     private void Awake()
@@ -36,7 +36,7 @@ public class GridManager : MonoBehaviour
         {
             for (int column = 0; column < maxColumn; column++)
             {
-                var tile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity, transform);
+                var tile = Instantiate(tilePrefab, new Vector3(x, y, 0) , Quaternion.identity, transform);
 
                 List<Sprite> possibleSprites = new List<Sprite>(tilePrefab.possibleCandySprite);
 
