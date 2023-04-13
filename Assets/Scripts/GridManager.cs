@@ -32,7 +32,7 @@ public class GridManager : MonoBehaviour
         float x = startPosition.x;
         float y = startPosition.y;
 
-        for (int row = maxRow; row > 0; row--)
+        for (int row =0; row < maxRow; row++)
         {
             for (int column = 0; column < maxColumn; column++)
             {
@@ -40,20 +40,19 @@ public class GridManager : MonoBehaviour
 
                 List<Sprite> possibleSprites = new List<Sprite>(tilePrefab.possibleCandySprite);
 
-                Sprite left1 = GetSprite(column, row - 1);
-                Sprite left2 = GetSprite(column, row - 2);
+                //Choose what sprite to use for this cell
+                Sprite left1 = GetSprite(column , row - 1);
+                Sprite left2 = GetSprite(column , row - 2);
                 if (left2 != null && left1 == left2)
                 {
-                    possibleSprites.Remove(left2);
-                    
+                    possibleSprites.Remove(left1);
                 }
 
-
-                Sprite down1 = GetSprite(column -1, row);
-                Sprite down2 = GetSprite(column - 2, row);
+                Sprite down1 = GetSprite(column - 1, row );
+                Sprite down2 = GetSprite(column - 2, row );
                 if (down2 != null && down1 == down2)
                 {
-                    possibleSprites.Remove(down2);
+                    possibleSprites.Remove(down1);
                 }
 
 
