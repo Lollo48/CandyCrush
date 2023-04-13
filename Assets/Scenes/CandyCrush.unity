@@ -239,13 +239,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 5256875125065082007, guid: 4e0eefc12a5f58347bbcc4fdfef647c7, type: 3}
   maxColumn: 5
-  maxRow: 7
+  maxRow: 8
   possibleCandySprite:
   - {fileID: 21300000, guid: f0f9d41c84cd23f4aacb29de3ba49c6f, type: 3}
   - {fileID: 21300000, guid: 6c3ce8fb9a2af7e4c9fecb6a58876a6d, type: 3}
   - {fileID: 21300000, guid: 71c86ca40a148dc409998b8e03403514, type: 3}
   - {fileID: 21300000, guid: feb31e8c1c04517438c64543230b4d45, type: 3}
-  offset: {x: -5.8, y: 1, z: 0}
+  offset: {x: -0.6, y: 1, z: 0}
 --- !u!114 &1448804044
 MonoBehaviour:
   m_ObjectHideFlags: 0

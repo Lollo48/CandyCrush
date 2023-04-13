@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
+    private Grid gridData;
+    private Tile getTile;
     public GameObject tilePrefab;
     public int maxColumn;
     public int maxRow;
-    private GameObject[,] Grid;
+    private GameObject[,] GridPrefabs;
     public List<Sprite> possibleCandySprite = new List<Sprite>();
-    private Grid gridData;
+
     public Vector3 offset;
     
 
@@ -21,7 +23,7 @@ public class GridManager : MonoBehaviour
     void Start()
     {
 
-        Grid = new GameObject[maxColumn, maxRow];
+        GridPrefabs = new GameObject[maxColumn, maxRow];
         GridGenerator();
     }
 
@@ -58,12 +60,10 @@ public class GridManager : MonoBehaviour
                 SpriteRenderer renderer = newTile.GetComponent<SpriteRenderer>();
                 renderer.sprite = possibleSprites[Random.Range(0, possibleSprites.Count)];
 
-                //Tile tile = newTile.AddComponent<Tile>();
-                //tile.Position = new Vector2Int(column, row);
                 newTile.name = "Tile - (" + row.ToString() + " - " + column.ToString() + ")";
                 newTile.transform.localScale = gridData.cellSize;
-                x += 1 * (gridData.cellSize.x + gridData.cellGap.x);
-                Grid[column, row] = newTile;
+                x -= 1 * (gridData.cellSize.x + gridData.cellGap.x);
+                GridPrefabs[column, row] = newTile;
 
             }
             x = startPosition.x;
@@ -76,7 +76,7 @@ public class GridManager : MonoBehaviour
     Sprite GetSpriteAt(int column, int row)
     {
         if (column < 0 || column >= maxColumn || row < 0 || row >= maxRow) return null;
-        GameObject tile = Grid[column, row];
+        GameObject tile = GridPrefabs[column, row];
         SpriteRenderer renderer = tile.GetComponent<SpriteRenderer>();
         return renderer.sprite;
 

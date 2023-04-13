@@ -7,12 +7,7 @@ public class Tile : MonoBehaviour
 {
 
     public TileData data;
-
-
-
-    public Vector2Int Position;
-
-
+ 
 
     public void Initialize(GridManager gridM, int rowInit, int columnInit)
     {
