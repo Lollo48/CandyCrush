@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6246688174320217785}
   - component: {fileID: 4431626184575595635}
+  - component: {fileID: 8416030957643287723}
   - component: {fileID: -2139814788283604026}
   m_Layer: 0
   m_Name: Tile
@@ -83,6 +84,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &8416030957643287723
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5256875125065082007}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.28, y: 1.28, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-2139814788283604026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,9 +113,3 @@ MonoBehaviour:
     row: 0
     column: 0
     gm: {fileID: 0}
-  spriteRenderer: {fileID: 0}
-  possibleCandySprite:
-  - {fileID: 21300000, guid: f0f9d41c84cd23f4aacb29de3ba49c6f, type: 3}
-  - {fileID: 21300000, guid: 6c3ce8fb9a2af7e4c9fecb6a58876a6d, type: 3}
-  - {fileID: 21300000, guid: 71c86ca40a148dc409998b8e03403514, type: 3}
-  - {fileID: 21300000, guid: feb31e8c1c04517438c64543230b4d45, type: 3}
