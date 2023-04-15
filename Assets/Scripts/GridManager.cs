@@ -6,7 +6,6 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     private Grid gridData;
-    private Tile getTile;
     public GameObject tilePrefab;
     public int maxColumn;
     public int maxRow;
@@ -46,15 +45,15 @@ public class GridManager : MonoBehaviour
                 List<Sprite> possibleSprites = new List<Sprite>(possibleCandySprite);
 
                 //Choose what sprite to use for this cell
-                Sprite left1 = GetSpriteAt(column - 1, row);
-                Sprite left2 = GetSpriteAt(column - 2, row);
+                Sprite left1 = GetSpriteAt(column , row - 1);
+                Sprite left2 = GetSpriteAt(column , row - 2);
                 if (left2 != null && left1 == left2)
                 {
                     possibleSprites.Remove(left1);
                 }
 
-                Sprite down1 = GetSpriteAt(column, row - 1);
-                Sprite down2 = GetSpriteAt(column, row - 2);
+                Sprite down1 = GetSpriteAt(column - 1, row );
+                Sprite down2 = GetSpriteAt(column - 2, row );
                 if (down2 != null && down1 == down2)
                 {
                     possibleSprites.Remove(down1);
@@ -64,7 +63,10 @@ public class GridManager : MonoBehaviour
                 renderer.sprite = possibleSprites[Random.Range(0, possibleSprites.Count)];
 
                 newTile.name = "Tile - (" + row.ToString() + " - " + column.ToString() + ")";
-                newTile.transform.localScale = gridData.cellSize;
+                
+                Tile tile = newTile.AddComponent<Tile>(); //add tile component 
+                tile.Position = new Vector2Int(column, row); //Representation of 2D vectors and points using integers i'm going to take the right position about column and row for the swap 
+
                 x -= 1 * (gridData.cellSize.x + gridData.cellGap.x);
                 GridPrefabs[column, row] = newTile;
 
@@ -85,15 +87,6 @@ public class GridManager : MonoBehaviour
 
     }
 
-    SpriteRenderer GetSpriteRendererAt(int column, int row)
-    {
-        if (column < 0 || column >= maxColumn || row < 0 || row >= maxRow)
-            return null;
-        GameObject tile = GridPrefabs[column, row];
-        SpriteRenderer renderer = tile.GetComponent<SpriteRenderer>();
-        return renderer;
-    }
-
 
     public void SwapTiles(Vector2Int tile1Position, Vector2Int tile2Position)
     {
@@ -107,108 +100,33 @@ public class GridManager : MonoBehaviour
         renderer1.sprite = renderer2.sprite;
         renderer2.sprite = temp;
 
-        bool changesOccurs = CheckMatches();
-        if (!changesOccurs)
-        {
-            temp = renderer1.sprite;
-            renderer1.sprite = renderer2.sprite;
-            renderer2.sprite = temp;
-            
-        }
-        else
-        {
-
-            do
-            {
-                //FillHoles();
-            } while (CheckMatches());
-            
-        }
     }
 
-    bool CheckMatches()
+    private void MatchRow()
     {
-        HashSet<SpriteRenderer> matchedTiles = new HashSet<SpriteRenderer>();
+        List<Sprite> match = new List<Sprite>();
         for (int row = 0; row < maxRow; row++)
         {
             for (int column = 0; column < maxColumn; column++)
             {
-                SpriteRenderer current = GetSpriteRendererAt(column, row);
+                Sprite sprite = GetSpriteAt(column, row);
 
-                List<SpriteRenderer> horizontalMatches = FindColumnMatchForTile(column, row, current.sprite);
-                if (horizontalMatches.Count >= 2)
-                {
-                    matchedTiles.UnionWith(horizontalMatches);
-                    matchedTiles.Add(current);
-                }
+                match.Add(sprite);
+                
 
-                List<SpriteRenderer> verticalMatches = FindRowMatchForTile(column, row, current.sprite);
-                if (verticalMatches.Count >= 2)
-                {
-                    matchedTiles.UnionWith(verticalMatches);
-                    matchedTiles.Add(current);
-                }
+
+
+
+
+
             }
         }
-
-        foreach (SpriteRenderer renderer in matchedTiles)
-        {
-            renderer.sprite = null;
-        }
-      
-        return matchedTiles.Count > 0;
     }
 
-    List<SpriteRenderer> FindColumnMatchForTile(int col, int row, Sprite sprite)
-    {
-        List<SpriteRenderer> result = new List<SpriteRenderer>();
-        for (int i = col + 1; i < maxColumn; i++)
-        {
-            SpriteRenderer nextColumn = GetSpriteRendererAt(i, row);
-            if (nextColumn.sprite != sprite)
-            {
-                break;
-            }
-            result.Add(nextColumn);
-        }
-        return result;
-    }
-
-    List<SpriteRenderer> FindRowMatchForTile(int col, int row, Sprite sprite)
-    {
-        List<SpriteRenderer> result = new List<SpriteRenderer>();
-        for (int i = row + 1; i < maxRow; i++)
-        {
-            SpriteRenderer nextRow = GetSpriteRendererAt(col, i);
-            if (nextRow.sprite != sprite)
-            {
-                break;
-            }
-            result.Add(nextRow);
-        }
-        return result;
-    }
-
-    //void FillHoles()
-    //{
-    //    for (int column = 0; column < maxColumn; column++)
-    //        for (int row = 0; row < maxRow; row++)
-    //        {
-    //            while (GetSpriteRendererAt(column, row).sprite == null)
-    //            {
-    //                SpriteRenderer current = GetSpriteRendererAt(column, row);
-    //                SpriteRenderer next = current;
-    //                for (int filler = row; filler < maxRow - 1; filler++)
-    //                {
-    //                    next = GetSpriteRendererAt(column, filler + 1);
-    //                    current.sprite = next.sprite;
-    //                    current = next;
-    //                }
-    //                next.sprite = possibleCandySprite[Random.Range(0, possibleCandySprite.Count)];
-    //            }
-    //        }
-    //}
 
 
+
+
+   
 
 }

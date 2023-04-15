@@ -7,11 +7,14 @@ public class Tile : MonoBehaviour
 {
 
     public TileData data;
-    private Tile tile;
+    public static Tile tile;
+
     private SpriteRenderer Renderer;
 
+    
     public Vector2Int Position;
 
+ 
     public void Initialize(GridManager gridM, int rowInit, int columnInit)
     {
         data = new TileData(gridM, rowInit, columnInit);
@@ -19,7 +22,9 @@ public class Tile : MonoBehaviour
 
     private void Start()
     {
+    
         Renderer = GetComponent<SpriteRenderer>();
+       
     }
 
     public void Select()
@@ -32,21 +37,23 @@ public class Tile : MonoBehaviour
         Renderer.color = Color.white;
     }
 
-    private void OnMouseDown()
+
+
+    public void OnMouseDown()
     {
+
         if (tile != null)
         {
             if (tile == this)
                 return;
-            Unselect();
-            if (Vector2Int.Distance(tile.Position, Position)  < 2)
+            tile.Unselect();
+            if (Vector2Int.Distance(tile.Position, Position) == 1)
             {
                 GridManager.Instance.SwapTiles(Position, tile.Position);
                 tile = null;
             }
             else
             {
-
                 tile = this;
                 Select();
             }
@@ -57,7 +64,9 @@ public class Tile : MonoBehaviour
             tile = this;
             Select();
         }
+
     }
+
 
 
 }
