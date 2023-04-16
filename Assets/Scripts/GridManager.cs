@@ -29,6 +29,13 @@ public class GridManager : MonoBehaviour
         GridGenerator();
     }
 
+
+    private void Update()
+    {
+        NewSprite();
+        
+    }
+
     private void GridGenerator()
     {
         Vector3 startPosition = new Vector3(maxColumn * (gridData.cellSize.x + gridData.cellGap.x) / 2, maxRow * (gridData.cellSize.y + gridData.cellGap.y) / 2, 0);
@@ -41,23 +48,9 @@ public class GridManager : MonoBehaviour
             for (int column = 0; column < maxColumn; column++)
             {
                 GameObject newTile = Instantiate(tilePrefab, new Vector3( x, y , 0) + offset, Quaternion.identity, transform);
-
                 List<Sprite> possibleSprites = new List<Sprite>(possibleCandySprite);
 
-                //Choose what sprite to use for this cell
-                Sprite left1 = GetSpriteAt(column , row - 1);
-                Sprite left2 = GetSpriteAt(column , row - 2);
-                if (left2 != null && left1 == left2)
-                {
-                    possibleSprites.Remove(left1);
-                }
-
-                Sprite down1 = GetSpriteAt(column - 1, row );
-                Sprite down2 = GetSpriteAt(column - 2, row );
-                if (down2 != null && down1 == down2)
-                {
-                    possibleSprites.Remove(down1);
-                }
+                choseSprite(column, row, possibleSprites);
 
                 SpriteRenderer renderer = newTile.GetComponent<SpriteRenderer>();
                 renderer.sprite = possibleSprites[Random.Range(0, possibleSprites.Count)];
@@ -87,6 +80,37 @@ public class GridManager : MonoBehaviour
 
     }
 
+    GameObject GetGameObjectAt(int column, int row)
+    {
+        if (column < 0 || column >= maxColumn || row < 0 || row >= maxRow) return null;
+        GameObject tile = GridPrefabs[column, row];
+        return tile;
+
+    }
+
+
+    private void choseSprite(int column,int row, List<Sprite> possibleSprites)
+    {
+
+        //Choose what sprite to use for this cell
+        Sprite left1 = GetSpriteAt(column, row - 1);
+        Sprite left2 = GetSpriteAt(column, row - 2);
+        if (left2 != null && left1 == left2)
+        {
+            possibleSprites.Remove(left1);
+        }
+
+        Sprite down1 = GetSpriteAt(column - 1, row);
+        Sprite down2 = GetSpriteAt(column - 2, row);
+        if (down2 != null && down1 == down2)
+        {
+            possibleSprites.Remove(down1);
+        }
+
+    }
+
+
+
 
     public void SwapTiles(Vector2Int tile1Position, Vector2Int tile2Position)
     {
@@ -100,33 +124,106 @@ public class GridManager : MonoBehaviour
         renderer1.sprite = renderer2.sprite;
         renderer2.sprite = temp;
 
+        bool changesOccurs = CheckForCombination();
+        if (!changesOccurs)
+        {
+            temp = renderer1.sprite;
+            renderer1.sprite = renderer2.sprite;
+            renderer2.sprite = temp;
+
+        }
     }
 
-    private void MatchRow()
+    
+    List<GameObject> FindRowCombination(int column, int row, Sprite sprite)
     {
-        List<Sprite> match = new List<Sprite>();
+        List<GameObject> result = new List<GameObject>();
+        for (int i = row + 1; i < maxRow; i++)
+        {
+            GameObject object1 = GetGameObjectAt(column, i);
+            SpriteRenderer sprite2 = object1.GetComponent<SpriteRenderer>();
+            if (sprite2.sprite != sprite)
+            {
+                break;
+            }
+            result.Add(object1);
+           
+        }
+        return result;
+    }
+
+    List<GameObject> FindColumnCombination(int col, int row, Sprite sprite)
+    {
+        List<GameObject> result = new List<GameObject>();
+        for (int i = col + 1; i < maxColumn; i++)
+        {
+            GameObject object1 = GetGameObjectAt(i, row);
+            SpriteRenderer sprite2 = object1.GetComponent<SpriteRenderer>();
+
+            if (sprite2.sprite != sprite)
+            {
+                break;
+            }
+            result.Add(object1);
+        }
+        return result;
+    }
+
+
+    bool CheckForCombination()
+    {
+        HashSet<GameObject> matchedTiles = new HashSet<GameObject>();
         for (int row = 0; row < maxRow; row++)
         {
             for (int column = 0; column < maxColumn; column++)
             {
-                Sprite sprite = GetSpriteAt(column, row);
+                GameObject current = GetGameObjectAt(column, row);
+                SpriteRenderer sprite2 = current.GetComponent<SpriteRenderer>();
 
-                match.Add(sprite);
-                
+                List<GameObject> horizontalMatches = FindColumnCombination(column, row, sprite2.sprite);
+                if (horizontalMatches.Count >= 2)
+                {
+                    matchedTiles.UnionWith(horizontalMatches);
+                    matchedTiles.Add(current);
+                }
 
-
-
-
-
-
+                List<GameObject> verticalMatches = FindRowCombination(column, row, sprite2.sprite);
+                if (verticalMatches.Count >= 2)
+                {
+                    matchedTiles.UnionWith(verticalMatches);
+                    matchedTiles.Add(current);
+                }
             }
         }
+
+        foreach (GameObject renderer in matchedTiles)
+        {
+            renderer.SetActive(false);
+        }
+        return matchedTiles.Count > 0;
     }
 
 
 
+    void NewSprite()
+    {
+        for (int column = 0; column < maxColumn; column++)
+        {
+            for (int row = 0; row < maxRow; row++)
+            {
+                if (GridPrefabs[column, row].activeInHierarchy == false )
+                {
+                    List<Sprite> possibleSprites = new List<Sprite>(possibleCandySprite);
 
+                    GridPrefabs[column, row].SetActive(true);
+                    choseSprite(column, row, possibleSprites);
+                    SpriteRenderer renderer = GridPrefabs[column,row].GetComponent<SpriteRenderer>();
+                    renderer.sprite = possibleSprites[Random.Range(0, possibleSprites.Count)];
 
-   
+                }
+            }
+        }
+
+    }
 
 }
