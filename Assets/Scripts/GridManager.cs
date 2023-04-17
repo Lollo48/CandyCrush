@@ -9,30 +9,28 @@ public class GridManager : MonoBehaviour
     public GameObject tilePrefab;
     public int maxColumn;
     public int maxRow;
-    private GameObject[,] GridPrefabs;
+    [HideInInspector]
+    public GameObject[,] GridPrefabs;
     public List<Sprite> possibleCandySprite = new List<Sprite>();
 
     public Vector3 offset;
-    public static GridManager Instance { get; private set; }
+
+    public static GridManager Instance;
 
 
     private void Awake()
     {
-        Instance = this;
- 
+        if (Instance == null)
+            Instance = this;
+        GridPrefabs = new GameObject[maxColumn,maxRow];
+
         gridData = GetComponent<Grid>();
     }
-    void Start()
-    {
 
-        GridPrefabs = new GameObject[maxColumn, maxRow];
-        GridGenerator();
-    }
+    
 
 
-   
-
-    private void GridGenerator()
+    public void GridGenerator()
     {
         Vector3 startPosition = new Vector3(maxColumn * (gridData.cellSize.x + gridData.cellGap.x) / 2, maxRow * (gridData.cellSize.y + gridData.cellGap.y) / 2, 0);
         
