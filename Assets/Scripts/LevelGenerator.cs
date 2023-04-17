@@ -7,6 +7,7 @@ public class LevelGenerator : MonoBehaviour
     public Camera camera;
 
 
+
     // Start is called before the first frame update
     void Awake()  
     {
