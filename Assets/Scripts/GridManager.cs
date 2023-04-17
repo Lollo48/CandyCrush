@@ -30,11 +30,7 @@ public class GridManager : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        NewSprite();
-        
-    }
+   
 
     private void GridGenerator()
     {
@@ -94,14 +90,14 @@ public class GridManager : MonoBehaviour
 
         //Choose what sprite to use for this cell
         Sprite left1 = GetSpriteAt(column, row - 1);
-        Sprite left2 = GetSpriteAt(column, row - 2);
+        Sprite left2 = GetSpriteAt(column, row - 1);
         if (left2 != null && left1 == left2)
         {
             possibleSprites.Remove(left1);
         }
 
         Sprite down1 = GetSpriteAt(column - 1, row);
-        Sprite down2 = GetSpriteAt(column - 2, row);
+        Sprite down2 = GetSpriteAt(column - 1, row);
         if (down2 != null && down1 == down2)
         {
             possibleSprites.Remove(down1);
@@ -132,6 +128,7 @@ public class GridManager : MonoBehaviour
             renderer2.sprite = temp;
 
         }
+        Invoke("NewSprite", 0.1f);
     }
 
     
