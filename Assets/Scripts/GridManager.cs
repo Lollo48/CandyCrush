@@ -23,14 +23,18 @@ public class GridManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
         GridPrefabs = new GameObject[maxColumn,maxRow];
-
+        
         gridData = GetComponent<Grid>();
     }
 
-    
 
+    private void Start()
+    {
+        GridGenerator(maxColumn, maxRow);
+        GameManager.instance.mouves = 0;
+    }
 
-    public void GridGenerator()
+    public void GridGenerator(int maxColumn, int maxRow)
     {
         Vector3 startPosition = new Vector3(maxColumn * (gridData.cellSize.x + gridData.cellGap.x) / 2, maxRow * (gridData.cellSize.y + gridData.cellGap.y) / 2, 0);
         
@@ -124,8 +128,11 @@ public class GridManager : MonoBehaviour
             temp = renderer1.sprite;
             renderer1.sprite = renderer2.sprite;
             renderer2.sprite = temp;
+            
 
         }
+        GameManager.instance.score += 50;
+        GameManager.instance.mouves += 1;
         Invoke("NewSprite", 0.1f);
     }
 
@@ -221,4 +228,11 @@ public class GridManager : MonoBehaviour
 
     }
 
+    
+
+
 }
+
+
+
+
