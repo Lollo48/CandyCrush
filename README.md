@@ -14,6 +14,8 @@ Ho imparato ad utilizzare le funzioni dando in ingresso informazioni e in uscita
 
 Per colpa del poco tempo non sono riuscito ad andare ad implementare un sistema di generazione del livello.
 Ho buttato giu tutte le basi per questa implementazione ma riscontrando dei problemi ho voluto portare solo le meccaniche corrette.
+In Develop c'è il match tree corretto.
+Nel branch Features/LevelGenerator invece si trova tutta la parte di "prova" di implementazione della generazione del livello
 
 Ringrazio per l'attenzione.
 Grasso Lorenzo 
