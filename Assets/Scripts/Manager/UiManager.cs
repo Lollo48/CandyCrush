@@ -6,47 +6,42 @@ using TMPro;
 public class UiManager : MonoBehaviour
 {
 
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI levelText;
-    public TextMeshProUGUI mouvesText;
-    public GameObject pauseScene;
-    public GameObject loseScene;
-    public GameObject winScene;
+    public TextMeshProUGUI m_scoreText;
+    public TextMeshProUGUI m_levelText;
+    public TextMeshProUGUI m_mouvesText;
+    //--------------------------------------------------------------------------
+
+    public GameObject m_pauseScene;
+    public GameObject m_loseScene;
+    public GameObject m_winScene;
 
 
 
-    //public GameObject win;
 
 
 
-    public static UiManager instance;
-
-
+    public static UiManager m_instance;
 
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (m_instance == null)
+            m_instance = this;
     }
-
-    
 
 
     private void Start()
     {
-        pauseScene.SetActive(false);
-        loseScene.SetActive(false);
-        winScene.SetActive(false);
+        m_pauseScene.SetActive(false);
+        m_loseScene.SetActive(false);
+        m_winScene.SetActive(false);
     }
-
-
 
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = GameManager.instance.score.ToString();
-        levelText.text = GameManager.instance.level.ToString();
-        mouvesText.text = GameManager.instance.mouves.ToString();
+        m_scoreText.text = GameManager.m_instance.m_score.ToString();
+        m_levelText.text = GameManager.m_instance.m_level.ToString();
+        m_mouvesText.text = GameManager.m_instance.m_mouves.ToString();
     }
 }

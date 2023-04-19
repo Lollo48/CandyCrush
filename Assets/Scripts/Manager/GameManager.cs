@@ -7,31 +7,31 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    public int level = 1;
-    public int score = 0;
-    public int mouves;
+    public int m_level = 1;
+    public int m_score = 0;
+    public int m_mouves;
 
-    public static GameManager instance;
+    public static GameManager m_instance;
 
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (m_instance == null)
+            m_instance = this;
     }
 
 
     private void Update()
     {
-        if (mouves >= 20 && score < 1000)
+        if (m_mouves == 0 && m_score < 1000)
         {
-            UiManager.instance.loseScene.SetActive(true);
-            GridManager.Instance.gameObject.SetActive(false);
+            UiManager.m_instance.m_loseScene.SetActive(true);
+            GridManager.m_instance.gameObject.SetActive(false);
         }
-        else if (score > 100)
+        else if (m_score > 999)
         {
-            UiManager.instance.winScene.SetActive(true);
-            GridManager.Instance.gameObject.SetActive(false);
+            UiManager.m_instance.m_winScene.SetActive(true);
+            GridManager.m_instance.gameObject.SetActive(false);
             
             
 
@@ -39,29 +39,26 @@ public class GameManager : MonoBehaviour
 
     }
 
-
-
-
     public void Pause()
     {
-        UiManager.instance.pauseScene.SetActive(true);
-        GridManager.Instance.gameObject.SetActive(false);
+        UiManager.m_instance.m_pauseScene.SetActive(true);
+        GridManager.m_instance.gameObject.SetActive(false);
         
     }
 
 
     public void ReturnGame()
     {
-        GridManager.Instance.gameObject.SetActive(true);
-        UiManager.instance.pauseScene.SetActive(false);
+        GridManager.m_instance.gameObject.SetActive(true);
+        UiManager.m_instance.m_pauseScene.SetActive(false);
     }
 
 
-    public void RestartGame()
-    {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+    //public void RestartGame()
+    //{
+    //    SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         
-    }
+    //}
 
 
 }

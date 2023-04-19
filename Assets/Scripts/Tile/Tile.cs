@@ -6,62 +6,60 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
 
-    public TileData data;
-    public static Tile tile;
+    public TileData m_data; //tileData
+    public static Tile m_tile; //my tile 
+    //-----------------------------------------------------------------------------
 
-    private SpriteRenderer Renderer;
+    private SpriteRenderer m_Renderer; //SpriteRenderer
+    //-----------------------------------------------------------------------------
 
-    
-    public Vector2Int Position;
+    public Vector2Int m_position; //Position 
 
  
     public void Initialize(GridManager gridM, int rowInit, int columnInit)
     {
-        data = new TileData(gridM, rowInit, columnInit);
+        m_data = new TileData(gridM, rowInit, columnInit);
     }
 
     private void Start()
     {
     
-        Renderer = GetComponent<SpriteRenderer>();
+        m_Renderer = GetComponent<SpriteRenderer>();
        
     }
 
     public void Select()
     {
-        Renderer.color = Color.grey;
+        m_Renderer.color = Color.grey;
     }
 
     public void Unselect()
     {
-        Renderer.color = Color.white;
+        m_Renderer.color = Color.white;
     }
 
 
 
     public void OnMouseDown()
     {
-
-        if (tile != null)
+        if (m_tile != null)
         {
-            if (tile == this)
-                return;
-            tile.Unselect();
-            if (Vector2Int.Distance(tile.Position, Position) == 1)
+            m_tile.Unselect();
+            if (Vector2Int.Distance(m_tile.m_position, m_position) == 1) //tile position  == 1
             {
-                GridManager.Instance.SwapTiles(Position, tile.Position);
-                tile = null;
+                GridManager.m_instance.SwapTiles(m_position, m_tile.m_position); //let's swap 
+                m_tile = null;
             }
             else
             {
-                tile = this;
+                m_tile = this;
                 Select();
             }
         }
         else
         {
             
-            tile = this;
+            m_tile = this;
             Select();
         }
 

@@ -2095,9 +2095,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60acd357f2b4bf846b0b9132d2ad42fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
-  score: 0
-  mouves: 20
+  m_level: 1
+  m_score: 0
+  m_mouves: 0
 --- !u!1 &1448917540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,12 +2311,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 522c012ed1c331b4f861bae42af5b0a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 2055487053}
-  levelText: {fileID: 1329348953}
-  mouvesText: {fileID: 1415810912}
-  pauseScene: {fileID: 1623389360}
-  loseScene: {fileID: 1327489254}
-  winScene: {fileID: 2083489481}
+  m_scoreText: {fileID: 2055487053}
+  m_levelText: {fileID: 1329348953}
+  m_mouvesText: {fileID: 1415810912}
+  m_pauseScene: {fileID: 1623389360}
+  m_loseScene: {fileID: 1327489254}
+  m_winScene: {fileID: 2083489481}
 --- !u!1 &1623389360
 GameObject:
   m_ObjectHideFlags: 0
@@ -3144,7 +3144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2083489482
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3396,9 +3396,49 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8549218317152211484, guid: 455dc108899e0824c921c6d5681a205d, type: 3}
+      propertyPath: m_maxRow
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8549218317152211484, guid: 455dc108899e0824c921c6d5681a205d, type: 3}
       propertyPath: maxColumn
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8549218317152211484, guid: 455dc108899e0824c921c6d5681a205d, type: 3}
+      propertyPath: m_offset.x
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8549218317152211484, guid: 455dc108899e0824c921c6d5681a205d, type: 3}
+      propertyPath: m_offset.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8549218317152211484, guid: 455dc108899e0824c921c6d5681a205d, type: 3}
+      propertyPath: m_maxColumn
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8549218317152211484, guid: 455dc108899e0824c921c6d5681a205d, type: 3}
+      propertyPath: m_tilePrefab
+      value: 
+      objectReference: {fileID: 5256875125065082007, guid: 4e0eefc12a5f58347bbcc4fdfef647c7, type: 3}
+    - target: {fileID: 8549218317152211484, guid: 455dc108899e0824c921c6d5681a205d, type: 3}
+      propertyPath: m_possibleCandySprite.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8549218317152211484, guid: 455dc108899e0824c921c6d5681a205d, type: 3}
+      propertyPath: m_possibleCandySprite.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: f0f9d41c84cd23f4aacb29de3ba49c6f, type: 3}
+    - target: {fileID: 8549218317152211484, guid: 455dc108899e0824c921c6d5681a205d, type: 3}
+      propertyPath: m_possibleCandySprite.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 6c3ce8fb9a2af7e4c9fecb6a58876a6d, type: 3}
+    - target: {fileID: 8549218317152211484, guid: 455dc108899e0824c921c6d5681a205d, type: 3}
+      propertyPath: m_possibleCandySprite.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 71c86ca40a148dc409998b8e03403514, type: 3}
+    - target: {fileID: 8549218317152211484, guid: 455dc108899e0824c921c6d5681a205d, type: 3}
+      propertyPath: m_possibleCandySprite.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: feb31e8c1c04517438c64543230b4d45, type: 3}
     - target: {fileID: 8549218317152211485, guid: 455dc108899e0824c921c6d5681a205d, type: 3}
       propertyPath: m_Name
       value: GridManager
