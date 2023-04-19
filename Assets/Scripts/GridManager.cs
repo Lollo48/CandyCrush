@@ -34,13 +34,13 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
         GridGenerator(m_maxColumn, m_maxRow); //create the grid 
-        GameManager.m_instance.m_mouves = 20; //add mouves not yet added the level generator but i started the implementation
-    }                                    //i couldn't create it because time finished
+        
+    }                                    
 
 
 
     //grid generator permit to implement the gird 
-    public void GridGenerator(int maxColumn, int maxRow)
+    private void GridGenerator(int maxColumn, int maxRow)
     {
         //startPosition 
         Vector3 startPosition = new Vector3(maxColumn * (m_GridData.cellSize.x + m_GridData.cellGap.x) / 2, maxRow * (m_GridData.cellSize.y + m_GridData.cellGap.y) / 2, 0);
@@ -152,8 +152,7 @@ public class GridManager : MonoBehaviour
             
 
         }
-        GameManager.m_instance.m_mouves -= 1; //mouves
-        GameManager.m_instance.m_score += 50; //score
+       
         Invoke("NewSprite", 0.1f); //newSprite i explain that funcion below  
     }
 
@@ -235,7 +234,7 @@ public class GridManager : MonoBehaviour
 
 
     //this function allow to fill with new sprite 
-    void NewSprite()
+    public void NewSprite()
     {
         for (int column = 0; column < m_maxColumn; column++) //every single column 
         {
